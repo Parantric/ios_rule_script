@@ -19,7 +19,7 @@ DOMAIN,crash2.zhihu.com,REJECT
 DOMAIN,appcloud.zhihu.com,REJECT
 DOMAIN,appcloud2.in.zhihu.com,REJECT
 
-[URL Rewrite]
+[Rewrite]
 ^https?:\/\/118\.89\.204\.198 - reject-dict
 ^https?:\/\/103\.41\.167\.237 - reject-dict
 ^https?:\/\/2402:4e00:1200:ed00:0:9089:6dac:96b6 - reject-dict
@@ -45,6 +45,8 @@ DOMAIN,appcloud2.in.zhihu.com,REJECT
 ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/current_reading - reject-dict
 # 疑似推荐页内容更新红点
 ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/tag_config - reject-dict
+# 去除回答页的相关搜索
+^https?:\/\/www\.zhihu\.com\/api\/v\d+\/search\/related_queries\/answer - reject-dict
 # 暂不清楚作用
 ^https?:\/\/api\.zhihu\.com\/commercial_api\/banners_v3\/app_topstory_banner - reject-dict
 ^https?:\/\/api\.zhihu\.com\/ad-style-service\/request - reject-dict
@@ -59,6 +61,7 @@ http-request ^https?:\/\/api\.zhihu\.com\/feed-root\/block script-path=https://g
 # 优化软件配置 - 优化下发的配置文件来实现某些效果
 http-response ^https?:\/\/m-cloud\.zhihu\.com\/api\/cloud\/config\/all\? requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_优化软件配置1
 http-response ^https?:\/\/appcloud2\.zhihu\.com\/v\d+\/config requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_优化软件配置2
+http-response ^https?:\/\/api\.zhihu\.com\/feed\/render\/tab\/config requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_优化软件配置3
 
 # 用户信息 - 修改用户盐值
 http-response ^https?:\/\/api\.zhihu\.com\/user-credit\/basis requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_修改用户盐值
@@ -76,7 +79,7 @@ http-response ^https?:\/\/api\.zhihu\.com\/settings\/blocked_users requires-body
 http-response ^https?:\/\/api\.zhihu\.com\/(v4\/)?questions\/\d+ requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_回答列表优化
 
 # 回答信息流 - 移除黑名单用户的回答、去除广告
-^https?:\/\/api\.zhihu\.com\/next-data requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_回答信息流优化
+^https?:\/\/api\.zhihu\.com\/next-(data|bff|render) requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_回答信息流优化
 
 # 回答页底部评论摘要 - 移除黑名单用户发表的评论
 http-response ^https?:\/\/www\.zhihu\.com\/api\/v4\/comment_v5\/answers\/\d+\/abstract_comment\? requires-body=1,script-path=https://gist.githubusercontent.com/blackmatrix7/f5f780d0f56b319b6ad9848fd080bb18/raw/zheye.min.js,tag=哲也_评论摘要优化

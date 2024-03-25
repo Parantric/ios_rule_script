@@ -35,6 +35,8 @@ http:
     - ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/current_reading - reject-dict
     # 疑似推荐页内容更新红点
     - ^https?:\/\/api\.zhihu\.com\/feed\/render\/revisit\/tag_config url reject-dict
+    # 去除回答页的相关搜索
+    - ^https?:\/\/www\.zhihu\.com\/api\/v\d+\/search\/related_queries\/answer url reject-dict
     # 暂不清楚作用
     - ^https?:\/\/api\.zhihu\.com\/commercial_api\/banners_v3\/app_topstory_banner - reject-dict
     - ^https?:\/\/api\.zhihu\.com\/ad-style-service\/request - reject-dict
@@ -64,6 +66,12 @@ http:
       timeout: 30
       argument: '' 
     - match: ^https?:\/\/appcloud2\.zhihu\.com\/v\d+\/config
+      name: zheye.js
+      type: response
+      require-body: true
+      timeout: 30
+      argument: '' 
+    - match: ^https?:\/\/api\.zhihu\.com\/feed\/render\/tab\/config
       name: zheye.js
       type: response
       require-body: true
@@ -111,7 +119,7 @@ http:
       argument: ''
 
     # 回答信息流 - 移除黑名单用户的回答、去除广告
-    - match: ^https?:\/\/api\.zhihu\.com\/next-data
+    - match: ^https?:\/\/api\.zhihu\.com\/next-(data|bff|render)
       name: zheye.js
       type: response
       require-body: true
